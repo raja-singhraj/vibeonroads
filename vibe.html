@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vibe On Roads</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #2F4F2F;
+  --gold: #D6B04C;
+  --sand: #FAFAF7;
+  --text: #2B2B2B;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--sand);
+}
+
+/* HEADER */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 80px;
+  border-bottom: 1px solid rgba(47,79,47,0.08);
+}
+
+.brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--green);
+}
+
+.navlinks {
+  display: flex;
+  gap: 40px;
+}
+
+.navlinks a {
+  text-decoration: none;
+  color: var(--green);
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+  cursor: pointer;
+}
+
+.navlinks a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--gold);
+  transition: 0.3s;
+}
+
+.navlinks a:hover::after {
+  width: 100%;
+}
+
+.cta {
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #D6B04C, #C99A32);
+  border-radius: 40px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(214,176,76,0.3);
+}
+
+/* HERO */
+.hero {
+  height: 90vh;
+  background: linear-gradient(rgba(47,79,47,0.6), rgba(47,79,47,0.6)),
+  url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 60px;
+}
+
+.hero p {
+  font-size: 20px;
+  margin: 20px 0;
+}
+
+/* PAGES */
+#about, #form {
+  display: none;
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.8;
+  padding: 100px 80px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="topbar">
+  <div class="brand">Vibe On Roads</div>
+
+  <nav class="navlinks">
+    <a onclick="showHome()">Home</a>
+    <a onclick="showAbout()">About</a>
+  </nav>
+
+  <button class="cta" onclick="showForm()">Plan My Trip</button>
+</header>
+
+<!-- HOME -->
+<div id="home">
+  <div class="hero">
+    <div>
+      <h1>Where Every Road Has a Story</h1>
+      <p>Custom journeys & soulful travel experiences</p>
+      <button class="cta" onclick="showForm()">Start Your Journey</button>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about">
+<h1 style="font-family:Playfair Display; color:var(--green)">About Vibe On Roads</h1>
+
+<p>
+Vibe On Roads is a travel experience company that believes travel is more than reaching a destination. It’s about the roads you take, the pauses you allow, and the stories you carry back.
+</p>
+
+<p>
+We create group trips and customised journeys that feel personal, comfortable, and real — never rushed or packaged. From scenic road routes to handpicked stays, we focus on how the journey feels, not just where you go.
+</p>
+
+<p><b>Many roads. Many stories. One vibe.</b><br>
+Because every journey deserves the right vibe.</p>
+</div>
+
+<!-- GOOGLE FORM -->
+<div id="form">
+<h1 style="font-family:Playfair Display; color:var(--green)">Plan Your Journey</h1>
+
+<iframe 
+src="https://docs.google.com/forms/d/e/1FAIpQLSeA6tNGpTAyqWag13fr8QZws1hNWyTLI6DawvWB_E8aqHgiSg/viewform?embedded=true"
+width="100%" 
+height="750" 
+frameborder="0">
+Loading…
+</iframe>
+
+<br><br>
+<button class="cta" onclick="showHome()">Back to Home</button>
+</div>
+
+<script>
+const home = document.getElementById("home");
+const about = document.getElementById("about");
+const form = document.getElementById("form");
+
+function showHome() {
+  home.style.display = "block";
+  about.style.display = "none";
+  form.style.display = "none";
+}
+
+function showAbout() {
+  home.style.display = "none";
+  about.style.display = "block";
+  form.style.display = "none";
+}
+
+function showForm() {
+  home.style.display = "none";
+  about.style.display = "none";
+  form.style.display = "block";
+}
+</script>
+
+</body>
+</html>
