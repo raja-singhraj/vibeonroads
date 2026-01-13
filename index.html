@@ -38,12 +38,13 @@
             z-index: 10001;
         }
         .pre-logo {
-            width: 150px;
-            height: auto;
+            width: 160px; /* Adjusted for badge shape */
+            height: 160px;
             margin-bottom: 30px;
             opacity: 0;
             transform: scale(0.8);
-            filter: drop-shadow(0 0 20px rgba(243, 112, 33, 0.3));
+            filter: drop-shadow(0 0 30px rgba(243, 112, 33, 0.5));
+            object-fit: contain;
         }
         .pre-text {
             font-family: 'Syne', sans-serif;
@@ -76,27 +77,24 @@
             background: url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Noise_Texture.png');
             animation: grain 1s steps(2) infinite;
         }
-        @keyframes grain {
-            0% { transform: translate(0,0); } 10% { transform: translate(-1%,-1%); }
-            50% { transform: translate(1%,1%); } 100% { transform: translate(0,0); }
-        }
 
         /* --- NAV --- */
         nav {
             position: fixed;
             top: 0; width: 100%;
-            padding: 20px 6%;
+            padding: 15px 6%;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 1000;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
             backdrop-filter: blur(10px);
         }
         .nav-logo-img {
-            height: 60px;
-            width: auto;
+            height: 70px; /* Badge logo size */
+            width: 70px;
+            object-fit: contain;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .nav-logo-img:hover { transform: scale(1.1) rotate(-3deg); }
+        .nav-logo-img:hover { transform: scale(1.15) rotate(5deg); }
         
         .nav-links a {
             color: #fff;
@@ -135,7 +133,7 @@
             box-shadow: 0 40px 100px rgba(0,0,0,1);
         }
 
-        /* --- WHO WE ARE SECTION --- */
+        /* --- WHO WE ARE --- */
         .who-we-are {
             padding: 160px 6%;
             display: grid;
@@ -174,11 +172,11 @@
             max-width: 550px;
             margin-bottom: 25px;
         }
-        .about-text .accent-label { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 5px; font-size: 0.8rem; display: block; margin-bottom: 15px; }
+        .accent-label { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 5px; font-size: 0.8rem; display: block; margin-bottom: 15px; }
 
-        /* --- WHAT WE DO SECTION --- */
+        /* --- WHAT WE DO --- */
         .services-wrap {
-            padding: 100px 6%;
+            padding: 120px 6%;
             background: #050505;
             border-top: 1px solid var(--border);
         }
@@ -236,7 +234,7 @@
         .span-4 { grid-column: span 4; height: 650px; }
         .span-12 { grid-column: span 12; height: 500px; }
 
-        /* --- FOOTER CTA --- */
+        /* --- FOOTER --- */
         .cta-section {
             padding: 180px 6%;
             text-align: center;
@@ -255,10 +253,7 @@
             transition: 0.3s;
             letter-spacing: 2px;
         }
-        .btn-magnetic:hover { 
-            background: var(--accent); color: #fff; 
-            box-shadow: 0 0 50px var(--accent-glow);
-        }
+        .btn-magnetic:hover { background: var(--accent); color: #fff; box-shadow: 0 0 50px var(--accent-glow); }
 
         .contact-footer {
             margin-top: 100px;
@@ -294,7 +289,7 @@
 <body>
 
     <div id="preloader">
-        <img src="https://postimg.cc/LJK8MLsf/Logo.jpg" class="pre-logo" alt="Vibe On Roads Logo">
+        <img src="https://i.postimg.cc/LJK8MLsf/logo-badge.png" class="pre-logo" alt="Vibe On Roads Badge Logo">
         <div class="pre-text">VIBE ON ROADS</div>
     </div>
 
@@ -303,7 +298,7 @@
 
     <nav>
         <div class="logo">
-            <img src="https://postimg.cc/LJK8MLsf/Logo.jpg" alt="Vibe On Roads Logo" class="nav-logo-img">
+            <img src="https://i.postimg.cc/LJK8MLsf/logo-badge.png" alt="Vibe On Roads Logo" class="nav-logo-img">
         </div>
         <div class="nav-links">
             <a href="#who">Who We Are</a>
@@ -324,22 +319,22 @@
         <div class="about-text">
             <span class="accent-label">The Collective</span>
             <h2>Who Are We</h2>
-            <p>Vibe On Roads Private Limited is more than a travel company—we are a curated collective of pathfinders. Born from a primal love for the open highway and the spirit of India, we design road legacies for the modern explorer.</p>
+            <p>Vibe On Roads Private Limited is a curated collective of pathfinders. Born from a primal love for the open highway, we design road legacies for the modern explorer.</p>
             <p>We believe the road is the destination. Our community is built of those who value the rhythm of the engine and the changing horizon above all else.</p>
         </div>
     </section>
 
-    <section class="services-wrap" id="what">
+    <section class="services-wrap move" id="what">
         <div style="padding: 0 6%;">
             <span class="accent-label">Expertise</span>
             <h2 style="font-family:'Syne'; font-size:clamp(2.5rem, 5vw, 4.5rem); text-transform:uppercase; line-height:0.9;">Our Craft</h2>
         </div>
         
-        <div class="services-grid move">
+        <div class="services-grid">
             <div class="service-card">
                 <i class="fas fa-route"></i>
                 <h3>Curated Circuits</h3>
-                <p>We scout and design road-first itineraries that prioritize scenic vistas, technical curves, and cultural depth over tourist traps.</p>
+                <p>We scout and design road-first itineraries that prioritize scenic vistas and technical curves over tourist traps.</p>
             </div>
             <div class="service-card">
                 <i class="fas fa-shield-alt"></i>
@@ -398,14 +393,9 @@
         // MOUSE GLOW & PARALLAX
         const glow = document.getElementById('mouse-glow');
         document.addEventListener('mousemove', (e) => {
-            const x = e.clientX;
-            const y = e.clientY;
-            
-            gsap.to(glow, { x: x, y: y, duration: 0.8 });
-            
-            const xMove = (x / window.innerWidth - 0.5) * 60;
-            const yMove = (y / window.innerHeight - 0.5) * 60;
-            
+            gsap.to(glow, { x: e.clientX, y: e.clientY, duration: 0.8 });
+            const xMove = (e.clientX / window.innerWidth - 0.5) * 60;
+            const yMove = (e.clientY / window.innerHeight - 0.5) * 60;
             gsap.to("#heroImg", { x: -xMove, y: -yMove, rotateY: xMove/10, duration: 2 });
             gsap.to("#heroTitle", { x: xMove * 0.5, y: yMove * 0.5, duration: 2 });
         });
@@ -420,4 +410,3 @@
     </script>
 </body>
 </html>
-
