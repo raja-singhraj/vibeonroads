@@ -3,297 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibe On Roads | Private Limited</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
+    <title>Vibe On Roads | Premium Collective</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600&family=Syne:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
         :root {
-            --primary: #f37021;
-            --bg: #050505;
-            --card-bg: #0e0e0e;
+            --bg: #000000;
+            --accent: #f37021; 
+            --accent-glow: rgba(243, 112, 33, 0.4);
+            --border: rgba(255, 255, 255, 0.07);
             --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --transition: all 0.8s cubic-bezier(0.2, 1, 0.2, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
+            font-family: 'Outfit', sans-serif; 
             background: var(--bg); 
             color: #fff; 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Custom Mouse Follower Effect (CSS Only part) --- */
-        ::selection { background: var(--primary); color: white; }
-
-        /* --- Floating WhatsApp --- */
-        .wa-float {
+        /* --- GOOGLE-SPEC PRELOADER --- */
+        #preloader {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            background: #25D366;
-            color: white;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            z-index: 9999;
-            transition: var(--transition);
-            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.2);
+            inset: 0; background: #000;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10001;
         }
-        .wa-float:hover { transform: translateY(-10px) rotate(15deg); }
-
-        /* --- Immersive Hero Section --- */
-        .hero {
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Video Background Masking Effect */
-        .hero-video-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            opacity: 0.4;
-        }
-
-        .mask-text {
-            font-family: 'Syncopate', sans-serif;
-            font-size: clamp(5rem, 20vw, 15rem);
-            font-weight: 700;
-            line-height: 1;
-            background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070') center;
-            background-size: cover;
+        .pre-text {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 20px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #333, #fff, #333);
+            background-size: 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 50px rgba(243, 112, 33, 0.2));
-            margin-bottom: 20px;
+            animation: shine 2s infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* --- MOUSE GLOW TRAVERSAL --- */
+        #mouse-glow {
+            position: fixed;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(243, 112, 33, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
         }
 
-        .hero-subtext {
-            font-size: 1.2rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--primary);
-            font-weight: 800;
-            margin-top: -30px;
+        /* --- FILM GRAIN --- */
+        .grain {
+            position: fixed;
+            inset: 0; z-index: 9998;
+            pointer-events: none;
+            opacity: 0.05;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Noise_Texture.png');
+            animation: grain 1s steps(2) infinite;
+        }
+        @keyframes grain {
+            0% { transform: translate(0,0); } 10% { transform: translate(-1%,-1%); }
+            50% { transform: translate(1%,1%); } 100% { transform: translate(0,0); }
         }
 
-        /* --- Navigation --- */
+        /* --- NAV --- */
         nav {
-            position: absolute;
-            top: 0;
-            width: 100%;
+            position: fixed;
+            top: 0; width: 100%;
             padding: 40px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
         }
-        .logo { font-family: 'Syncopate', sans-serif; letter-spacing: -1px; font-size: 1.2rem; text-decoration: none; color: white; }
-        .logo span { color: var(--primary); }
+        .logo { font-family: 'Syne', sans-serif; font-size: 1.1rem; letter-spacing: -1px; text-transform: uppercase; }
+        .logo span { color: var(--accent); }
 
-        .btn-glass {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            padding: 15px 35px;
-            border-radius: 100px;
-            color: white;
-            text-decoration: none;
+        /* --- HERO --- */
+        .hero {
+            height: 110vh;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 0 10%;
+            perspective: 1000px;
+        }
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 12vw, 9.5rem);
+            line-height: 0.8;
             text-transform: uppercase;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            transition: var(--transition);
-        }
-        .btn-glass:hover { background: var(--primary); border-color: var(--primary); transform: scale(1.05); }
-
-        /* --- Bento Cinematic Grid --- */
-        .section { padding: 150px 8%; }
-        .section-title { font-family: 'Syncopate', sans-serif; font-size: 3rem; margin-bottom: 80px; text-align: left; border-left: 10px solid var(--primary); padding-left: 30px; }
-
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        .bento-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 60px 40px;
-            border-radius: 40px;
-            transition: var(--transition);
             position: relative;
+            z-index: 2;
+        }
+        .hero-img {
+            position: absolute;
+            right: 15%; width: 28vw; height: 38vw;
+            background: url('https://images.weserv.nl/?url=https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg&w=1200') center/cover;
+            border-radius: 10px;
+            z-index: 1;
+            filter: grayscale(1) contrast(1.2);
+            box-shadow: 0 40px 100px rgba(0,0,0,1);
+        }
+
+        /* --- BENTO SECTION --- */
+        .trips-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+            padding: 0 6% 150px;
+        }
+        .trip-card {
+            position: relative;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: border 0.4s;
         }
-
-        .bento-card:hover {
-            transform: translateY(-20px);
-            border-color: var(--primary);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+        .trip-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            filter: grayscale(1);
+            transition: 1.2s cubic-bezier(0.2, 1, 0.2, 1);
         }
-
-        .bento-card i { font-size: 3rem; color: var(--primary); margin-bottom: 30px; }
-        .bento-card h3 { font-family: 'Syncopate', sans-serif; font-size: 1.5rem; margin-bottom: 20px; }
-        .bento-card p { color: #888; line-height: 1.8; font-weight: 300; }
-
-        .featured-card { grid-column: span 2; background: linear-gradient(45deg, #111, #000); }
-
-        /* --- The "WOW" Gallery --- */
-        .gallery-strip {
-            display: flex;
-            gap: 20px;
-            overflow-x: hidden;
-            padding: 50px 0;
-        }
-        .gallery-item {
-            min-width: 400px;
-            height: 500px;
-            border-radius: 30px;
-            background-size: cover;
-            background-position: center;
-            filter: grayscale(100%);
-            transition: var(--transition);
-        }
-        .gallery-item:hover { filter: grayscale(0%); min-width: 500px; }
-
-        /* --- Footer --- */
-        footer {
-            background: #000;
-            padding: 120px 8% 60px;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-        .footer-title { font-family: 'Syncopate', sans-serif; font-size: clamp(2rem, 8vw, 6rem); margin-bottom: 50px; opacity: 0.1; }
+        .trip-card:hover { border-color: var(--accent); }
+        .trip-card:hover img { opacity: 0.8; filter: grayscale(0); transform: scale(1.05); }
         
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            text-align: left;
-            flex-wrap: wrap;
-            gap: 50px;
-        }
-        .footer-col h4 { color: var(--primary); margin-bottom: 25px; text-transform: uppercase; letter-spacing: 3px; }
-        .footer-col a { display: block; color: #fff; text-decoration: none; font-size: 1.2rem; margin-bottom: 15px; opacity: 0.6; transition: 0.3s; }
-        .footer-col a:hover { opacity: 1; color: var(--primary); }
+        .trip-info { position: absolute; bottom: 40px; left: 40px; }
+        .trip-info h4 { font-family: 'Syne', sans-serif; font-size: 2.2rem; text-transform: uppercase; }
+        .trip-info p { font-size: 0.7rem; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; font-weight: 800; }
 
-        /* Scroll Reveal Utility */
-        .reveal { opacity: 0; transform: translateY(50px) scale(0.9); transition: var(--transition); }
-        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+        .span-8 { grid-column: span 8; height: 650px; }
+        .span-4 { grid-column: span 4; height: 650px; }
+        .span-6 { grid-column: span 6; height: 500px; }
+
+        /* --- FOOTER CTA --- */
+        .cta-section {
+            padding: 180px 6%;
+            text-align: center;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
+            border-top: 1px solid var(--border);
+        }
+        .btn-magnetic {
+            display: inline-block;
+            padding: 26px 80px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+            letter-spacing: 2px;
+        }
+        .btn-magnetic:hover { 
+            background: var(--accent); color: #fff; 
+            transform: scale(1.05);
+            box-shadow: 0 0 50px var(--accent-glow);
+        }
+
+        .contact-footer {
+            margin-top: 100px;
+            display: flex; justify-content: space-between;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .contact-footer a { color: #fff; text-decoration: none; }
+
+        .wa-btn {
+            position: fixed;
+            bottom: 40px; right: 40px;
+            background: #25D366;
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: #fff;
+            z-index: 9999;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
 
         @media (max-width: 900px) {
-            .bento-grid { grid-template-columns: 1fr; }
-            .featured-card { grid-column: span 1; }
-            .footer-content { flex-direction: column; text-align: center; }
+            .span-8, .span-4, .span-6 { grid-column: span 12; height: 450px; }
+            .hero-img { display: none; }
+            .contact-footer { flex-direction: column; gap: 20px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <a href="https://wa.me/917566377899" class="wa-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <div id="preloader"><div class="pre-text">VIBE ON ROADS</div></div>
+    <div id="mouse-glow"></div>
+    <div class="grain"></div>
 
     <nav>
-        <a href="#" class="logo">VIBE<span>ON</span>ROADS</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeA6tNGpTAyqWag13fr8QZws1hNWyTLI6DawvWB_E8aqHgiSg/viewform?usp=header" target="_blank" class="btn-glass">Get In Touch</a>
+        <div class="logo">VIBE <span>ON</span> ROADS</div>
+        <a href="https://www.instagram.com/vibeonroads/" target="_blank" style="color: white; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
     </nav>
 
-    <section class="hero">
-        <div class="mask-text">VIBE</div>
-        <div class="hero-subtext">ON ROADS PVT LTD</div>
-        <p style="margin-top: 30px; font-weight: 300; letter-spacing: 2px; opacity: 0.6;">North India's Premium Travel Collective</p>
-    </section>
+    <header class="hero">
+        <div class="hero-img" id="heroImg"></div>
+        <h1 id="heroTitle">NOT JUST<br>TRIPS.</h1>
+    </header>
 
-    <section class="section reveal" id="about">
-        <h2 class="section-title">THE NEW<br>STANDARD.</h2>
-        <div class="bento-grid">
-            <div class="bento-card featured-card">
-                <i class="fas fa-fingerprint"></i>
-                <h3>Uniquely Yours</h3>
-                <p>We don't do mass tourism. Every journey is a hand-crafted narrative designed for groups who seek more than just a selfie—they seek an experience that changes them.</p>
+    <section>
+        <div class="trips-container">
+            <div class="trip-card span-8 move">
+                <img src="https://images.weserv.nl/?url=https://images.pexels.com/photos/1007427/pexels-photo-1007427.jpeg&w=1200" alt="Heritage">
+                <div class="trip-info"><p>Circuit 01</p><h4>Heritage Roots</h4></div>
             </div>
-            <div class="bento-card">
-                <i class="fas fa-shield-halved"></i>
-                <h3>Ironclad Safety</h3>
-                <p>Verified stays, elite pilots, and 24/7 on-ground support. Your safety is our obsession.</p>
+            <div class="trip-card span-4 move">
+                <img src="https://images.weserv.nl/?url=https://images.pexels.com/photos/1078983/pexels-photo-1078983.jpeg&w=1000" alt="Goa">
+                <div class="trip-info"><p>Circuit 02</p><h4>Goa Coastal</h4></div>
             </div>
-            <div class="bento-card">
-                <i class="fas fa-graduation-cap"></i>
-                <h3>Educational</h3>
-                <p>Immersive industrial and cultural expeditions for India's top-tier institutions.</p>
+            <div class="trip-card span-4 move">
+                <img src="https://images.weserv.nl/?url=https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg&w=1000" alt="Mussoorie">
+                <div class="trip-info"><p>Circuit 03</p><h4>Hill Station</h4></div>
             </div>
-            <div class="bento-card featured-card">
-                <i class="fas fa-map-location-dot"></i>
-                <h3>Raw Landscapes</h3>
-                <p>From hidden Himalayan passes to ancient desert roads, we take you where the maps stop and the stories begin.</p>
+            <div class="trip-card span-8 move">
+                <img src="https://images.weserv.nl/?url=https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg&w=1200" alt="Gir">
+                <div class="trip-info"><p>Circuit 04</p><h4>Forest Gir</h4></div>
+            </div>
+            <div class="trip-card span-6 move">
+                <img src="https://images.weserv.nl/?url=https://images.pexels.com/photos/739407/pexels-photo-739407.jpeg&w=1000" alt="Nepal">
+                <div class="trip-info"><p>Circuit 05</p><h4>Nepal Peaks</h4></div>
+            </div>
+            <div class="trip-card span-6 move">
+                <img src="https://images.weserv.nl/?url=https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg&w=1000" alt="Manali">
+                <div class="trip-info"><p>Circuit 06</p><h4>Himalayan Snow</h4></div>
             </div>
         </div>
     </section>
 
-    <div class="gallery-strip reveal">
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=1000');"></div>
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=1000');"></div>
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=1000');"></div>
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=1000');"></div>
-    </div>
-
-    <footer>
-        <h2 class="footer-title">VIBE ON ROADS</h2>
-        <div class="footer-content reveal">
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <a href="tel:+917566377899">+91 75663 77899</a>
+    <section class="cta-section">
+        <h2 style="font-family:'Syne'; font-size:clamp(2rem, 8vw, 5rem); line-height:0.9; margin-bottom:60px;">THE ROAD<br>NEVER ENDS.</h2>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeA6tNGpTAyqWag13fr8QZws1hNWyTLI6DawvWB_E8aqHgiSg/viewform?usp=header" target="_blank" class="btn-magnetic">Start Journey</a>
+        
+        <div class="contact-footer">
+            <p>VIBE ON ROADS PVT LTD &copy; 2026</p>
+            <div>
+                <a href="tel:+917566377899">+91 75663 77899</a> • 
                 <a href="mailto:info@vibeonroads.com">info@vibeonroads.com</a>
             </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <a href="https://www.instagram.com/vibeonroads/" target="_blank">Instagram</a>
-                <a href="https://wa.me/917566377899" target="_blank">WhatsApp Chat</a>
-            </div>
-            <div class="footer-col" style="max-width: 300px;">
-                <h4>Join the vibe</h4>
-                <p style="opacity: 0.5;">Experience the road less traveled with India's most innovative travel startup.</p>
-            </div>
         </div>
-        <p style="margin-top: 100px; opacity: 0.2; font-size: 0.8rem; letter-spacing: 5px;">&copy; 2026 VIBE ON ROADS PRIVATE LIMITED</p>
-    </footer>
+    </section>
+
+    <a href="https://wa.me/917566377899" class="wa-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <script>
-        // Reveal on scroll
-        window.addEventListener('scroll', () => {
-            const reveals = document.querySelectorAll('.reveal');
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const revealTop = el.getBoundingClientRect().top;
-                if (revealTop < windowHeight - 150) {
-                    el.classList.add('active');
-                }
-            });
+        gsap.registerPlugin(ScrollTrigger);
+
+        // PRELOADER
+        const preTl = gsap.timeline();
+        preTl.to(".pre-text", { opacity: 1, duration: 1 })
+             .to("#preloader", { yPercent: -100, duration: 1.2, ease: "expo.inOut", delay: 1 });
+
+        // MOUSE GLOW & PARALLAX
+        const glow = document.getElementById('mouse-glow');
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            gsap.to(glow, { x: x, y: y, duration: 0.8 });
+            
+            const xMove = (x / window.innerWidth - 0.5) * 60;
+            const yMove = (y / window.innerHeight - 0.5) * 60;
+            
+            gsap.to("#heroImg", { x: -xMove, y: -yMove, rotateY: xMove/10, duration: 2 });
+            gsap.to("#heroTitle", { x: xMove * 0.5, y: yMove * 0.5, duration: 2 });
         });
 
-        // Initial check for hero reveal
-        window.dispatchEvent(new Event('scroll'));
+        // HERO ENTRANCE
+        gsap.from("#heroTitle", { opacity: 0, y: 100, duration: 2, delay: 1.5, ease: "expo.out" });
+
+        // BENTO REVEAL
+        gsap.utils.toArray(".move").forEach(el => {
+            gsap.from(el, {
+                opacity: 0, y: 100, scale: 0.95, duration: 1.5,
+                scrollTrigger: { trigger: el, start: "top 90%" }
+            });
+        });
     </script>
 </body>
 </html>
